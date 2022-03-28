@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "5321b40d-2b85-4000-a364-d3ea629db24a",
+		"name": "Assignment Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Schedule",
+			"item": [
+				{
+					"name": "Football",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Football\",\r\n    \"start_time\": \"11:00\",\r\n    \"end_time\": \"13:00\",\r\n    \"date\": \"2022-03-28\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/sport_schedule/create",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"sport_schedule",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cricket",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Cricket\",\r\n    \"start_time\": \"10:00\",\r\n    \"end_time\": \"11:30\",\r\n    \"date\": \"2022-03-28\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/sport_schedule/create",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"sport_schedule",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const req = {",
+							"  method: 'POST',",
+							"  url: pm.environment.get(\"server\") + \"/user/login\",",
+							"  header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"  body: {",
+							"    mode: 'raw',",
+							"    raw: JSON.stringify({ email: \"contact@ratulsaha.me\", password: \"12345\" })",
+							"  }",
+							"};",
+							"",
+							"pm.sendRequest(req, (err, res) => pm.variables.set(\"token\", res.json().access_token));",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"full_name\": \"Ratul Saha\",\r\n    \"email\": \"contact@ratulsaha.me\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/create",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"contact@ratulsaha.me\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
